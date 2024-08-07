@@ -1,6 +1,4 @@
 class Solution {
-    int[] memo;
-
     public int rob(int[] nums) {
         if (nums.length == 0) return 0;
 
