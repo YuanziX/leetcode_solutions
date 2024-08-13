@@ -5,14 +5,10 @@ class Solution {
             char ch = s.charAt(i);
             if (isStarting(ch))
                 stack.push(ch);
-            else {
-                if (stack.isEmpty() || stack.pop() != bracketLookup(ch))
+            else if (stack.isEmpty() || stack.pop() != bracketLookup(ch))
                     return false;
-            }
         }
-        if (stack.isEmpty())
-            return true;
-        return false;
+        return stack.isEmpty();
     }
 
     boolean isStarting(char ch) {
@@ -22,15 +18,12 @@ class Solution {
     }
 
     char bracketLookup(char ch) {
-        switch (ch) {
-            case ')':
-                return '(';
-            case '}':
-                return '{';
-            case ']':
-                return '[';
-            default:
-                return 'N';
-        }
+        if (ch == ')')
+            return '(';
+        else if (ch == '}')
+            return '{';
+        else if (ch == ']')
+            return '[';
+        return 'N';
     }
 }
