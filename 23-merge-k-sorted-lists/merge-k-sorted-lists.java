@@ -26,17 +26,16 @@ class Solution {
 
         ListNode head = null;
         ListNode curr = null;
-        
+
+        if (!pq.isEmpty()) {
+            head = pq.poll();
+            curr = head;
+        }
+
         while (!pq.isEmpty()) {
-            if (head == null) {
-                head = pq.poll();
-                curr = head;
-                continue;
-            } else {
-                curr.next = pq.poll();
-                curr = curr.next;
-                curr.next = null;
-            }
+            curr.next = pq.poll();
+            curr = curr.next;
+            curr.next = null;
         }
 
         return head;
