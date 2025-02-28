@@ -9,35 +9,32 @@
  * }
  */
 class Solution {
+    public ListNode sortTwoList(ListNode l, ListNode r) {
+        if (l == null) return r;
+        if (r == null) return l;
+
+        if (l.val < r.val) {
+            l.next = sortTwoList(l.next, r);
+            return l;
+        } else {
+            r.next = sortTwoList(l, r.next);
+            return r;
+        }
+    }
+
+    public ListNode divideLists(ListNode[] lists, int l, int r) {
+        if (l == r) return lists[r];
+
+        int mid = l + (r - l) / 2;
+        ListNode l1 = divideLists(lists, l, mid);
+        ListNode l2 = divideLists(lists, mid + 1, r);
+
+        return sortTwoList(l1, l2);
+    }
+
     public ListNode mergeKLists(ListNode[] lists) {
-        PriorityQueue<ListNode> pq = new PriorityQueue<>(new Comparator<ListNode>() {
-            @Override
-            public int compare(ListNode l1, ListNode l2) {
-                return Double.compare(l1.val, l2.val);
-            }
-        } );
+        if (lists.length == 0) return null;
 
-        for (ListNode l: lists) {
-            while (l != null) {
-                pq.offer(l);
-                l = l.next;
-            }
-        }
-
-        ListNode head = null;
-        ListNode curr = null;
-
-        if (!pq.isEmpty()) {
-            head = pq.poll();
-            curr = head;
-        }
-
-        while (!pq.isEmpty()) {
-            curr.next = pq.poll();
-            curr = curr.next;
-            curr.next = null;
-        }
-
-        return head;
+        return divideLists(lists, 0, lists.length - 1);
     }
 }
