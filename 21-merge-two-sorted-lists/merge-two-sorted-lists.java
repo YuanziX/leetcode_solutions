@@ -30,7 +30,11 @@ class Solution {
             tail = tail.next;
         }
 
-        tail.next = (head1 != null) ? head1 : head2;
+        if (head1 == null) {
+            tail.next = head2;
+        } else {
+            tail.next = head1;
+        }
 
         return dummy.next;
     }
