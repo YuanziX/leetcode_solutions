@@ -19,10 +19,8 @@ class Solution {
 
         for (ListNode l: lists) {
             while (l != null) {
-                ListNode temp = l;
+                pq.offer(l);
                 l = l.next;
-                temp.next = null;
-                pq.offer(temp);
             }
         }
 
@@ -37,6 +35,7 @@ class Solution {
             } else {
                 curr.next = pq.poll();
                 curr = curr.next;
+                curr.next = null;
             }
         }
 
