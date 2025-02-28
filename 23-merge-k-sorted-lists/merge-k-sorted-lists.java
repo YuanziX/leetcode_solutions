@@ -10,11 +10,19 @@
  */
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        PriorityQueue<ListNode> pq = new PriorityQueue<>(new Comparator<ListNode>() {
+            @Override
+            public int compare(ListNode l1, ListNode l2) {
+                return Double.compare(l1.val, l2.val);
+            }
+        } );
+
         for (ListNode l: lists) {
             while (l != null) {
-                pq.offer(l.val);
+                ListNode temp = l;
                 l = l.next;
+                temp.next = null;
+                pq.offer(temp);
             }
         }
 
@@ -23,11 +31,11 @@ class Solution {
         
         while (!pq.isEmpty()) {
             if (head == null) {
-                head = new ListNode(pq.poll());
+                head = pq.poll();
                 curr = head;
                 continue;
             } else {
-                curr.next = new ListNode(pq.poll());
+                curr.next = pq.poll();
                 curr = curr.next;
             }
         }
