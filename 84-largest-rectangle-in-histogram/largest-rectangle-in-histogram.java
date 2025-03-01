@@ -34,10 +34,6 @@ class Solution {
             st.push(i);
         }
 
-        System.out.println("HGT: " + Arrays.toString(heights));
-        System.out.println("PSE: " + Arrays.toString(pse));
-        System.out.println("NSE: " + Arrays.toString(nse));
-
         int max = Integer.MIN_VALUE;
 
         for (int i = 0; i < heights.length; i++) {
