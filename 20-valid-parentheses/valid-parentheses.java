@@ -1,29 +1,42 @@
 class Solution {
     public boolean isValid(String s) {
-        Stack<Character> stack = new Stack<>();
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
-            if (isStarting(ch))
-                stack.push(ch);
-            else if (stack.isEmpty() || stack.pop() != bracketLookup(ch))
+        if (s.length() % 2 != 0) return false;
+
+        Stack<Character> st = new Stack<>();
+
+        for (char c: s.toCharArray()) {
+            if (isOpening(c)) {
+                st.push(c);
+            } else {
+                if (!st.isEmpty() && st.peek() == getOpening(c)) {
+                    st.pop();
+                } else {
                     return false;
+                }
+            }
         }
-        return stack.isEmpty();
+
+        if (st.isEmpty()) {
+            return true;
+        }
+        return false;
     }
 
-    boolean isStarting(char ch) {
-        if (ch == '[' || ch == '{' || ch == '(')
+    public boolean isOpening(char c) {
+        if (c == '(' || c == '[' || c == '{')
             return true;
         return false;
     }
 
-    char bracketLookup(char ch) {
-        if (ch == ')')
+    public char getOpening(char c) {
+        if (c == ')') {
             return '(';
-        else if (ch == '}')
-            return '{';
-        else if (ch == ']')
+        } else if (c == ']') {
             return '[';
-        return 'N';
+        } else if (c == '}') {
+            return '{';
+        }
+
+        return '9';
     }
 }
