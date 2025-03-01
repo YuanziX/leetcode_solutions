@@ -7,19 +7,12 @@ class Solution {
         for (char c: s.toCharArray()) {
             if (isOpening(c)) {
                 st.push(c);
-            } else {
-                if (!st.isEmpty() && st.peek() == getOpening(c)) {
-                    st.pop();
-                } else {
-                    return false;
-                }
+            } else if (st.isEmpty() || st.pop() != getOpening(c)) {
+                return false;
             }
         }
 
-        if (st.isEmpty()) {
-            return true;
-        }
-        return false;
+        return st.isEmpty();
     }
 
     public boolean isOpening(char c) {
