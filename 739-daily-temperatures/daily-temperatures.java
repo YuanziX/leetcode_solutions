@@ -7,7 +7,11 @@ class Solution {
             while (!st.isEmpty() && temp[st.peek()] <= temp[i]) {
                 st.pop();
             }
-            res[i] = st.isEmpty() ? 0 : st.peek() - i;
+            if (st.isEmpty()) {
+                res[i] = 0;
+            } else {
+                res[i] = st.peek() - i;
+            }
             st.push(i);
         }
 
