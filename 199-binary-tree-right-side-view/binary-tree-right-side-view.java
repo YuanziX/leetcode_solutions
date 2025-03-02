@@ -15,29 +15,25 @@
  */
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
-        Queue<TreeNode> q = new LinkedList<TreeNode>();
-        List<Integer> list = new ArrayList<>();
-        if (root == null) return list;
-        q.add(root);
+        List<Integer> marked = new ArrayList<>();
+        List<Integer> res = new ArrayList<>();
 
-        while (!q.isEmpty()) {
-            int n = q.size();
+        doSum(root, 0, marked, res);
 
-            for (int i = 0; i < n; i++) {
-                TreeNode current = q.poll();
-                if (i == n - 1) {
-                    list.add(current.val);
-                }
+        return res;
+    }
 
-                if (current.left != null) {
-                    q.add(current.left);
-                }
-
-                if (current.right != null) {
-                    q.add(current.right);
-                }
-            }
+    public void doSum(TreeNode node, int level, List<Integer> marked, List<Integer> res) {
+        if (node == null) {
+            return;
         }
-        return list;
+
+        if (!marked.contains(level)) {
+            marked.add(level);
+            res.add(node.val);
+        }
+
+        doSum(node.right, level + 1, marked, res);
+        doSum(node.left, level + 1, marked, res);
     }
 }
