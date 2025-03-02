@@ -14,25 +14,23 @@
  * }
  */
 class Solution {
-    void inOrderTraversal(TreeNode node, int k, int[] res) {
-        if (node == null || res[1] >= k) {
+    public void addToQueue(TreeNode node, PriorityQueue<Integer> pq) {
+        if (node == null)
             return;
-        }
-
-        inOrderTraversal(node.left, k, res);
-        res[1]++;
-        if (res[1] == k) {
-            res[0] = node.val;
-            return;
-        }
-        inOrderTraversal(node.right, k, res);
+        pq.add(node.val);
+        addToQueue(node.left, pq);
+        addToQueue(node.right, pq);
     }
 
     public int kthSmallest(TreeNode root, int k) {
-        int[] res = new int[2];
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        addToQueue(root, pq);
+        
+        while (k != 1) {
+            pq.poll();
+            k--;
+        }
 
-        inOrderTraversal(root, k, res);
-
-        return res[0];
+        return pq.poll();
     }
 }
