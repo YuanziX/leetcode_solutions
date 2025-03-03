@@ -1,5 +1,6 @@
 class Solution {
     public int findKthLargest(int[] nums, int k) {
+        System.gc();
         PriorityQueue<Integer> pq = new PriorityQueue<>();
         for (int i : nums) {
             pq.add(i);
