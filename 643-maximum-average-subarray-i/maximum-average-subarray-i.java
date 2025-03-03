@@ -6,9 +6,7 @@ class Solution {
         for (int i = 0; i < k; i++) {
             sum += nums[i];
         }
-        if (sum > max) {
-            max = sum;
-        }
+        max = sum;
         
         for (int i = k; i < nums.length; i++) {
             sum = sum + nums[i] - nums[i - k];
@@ -16,6 +14,7 @@ class Solution {
                 max = sum;
             }
         }
+        System.gc();
 
         return (double) max / k;
     }
