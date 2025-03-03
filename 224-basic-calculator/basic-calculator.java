@@ -5,7 +5,8 @@ class Solution {
         int res = 0;
         int sign = 1;
 
-        for (char c : s.toCharArray()) {
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
             if (Character.isDigit(c)) {
                 number = 10 * number + (c - '0');
             } else if (c == '+') {
