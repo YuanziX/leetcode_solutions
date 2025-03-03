@@ -14,25 +14,23 @@
  * }
  */
 class Solution {
-    private long currentMax = Long.MIN_VALUE;
-    private boolean result = true;
     public boolean isValidBST(TreeNode root) {
-        inOrder(root);
-        return result;
-    }
+        Stack<TreeNode> st = new Stack<>();
+        long prev = Long.MIN_VALUE;
 
-    public void inOrder(TreeNode node) {
-        if (node == null) {
-            return;
+        while (root != null || !st.isEmpty()) {
+            while (root != null) {
+                st.push(root);
+                root = root.left;
+            }
+            root = st.pop();
+            if (root.val <= prev) {
+                return false;
+            }
+            prev = root.val;
+            root = root.right;
         }
 
-        inOrder(node.left);
-        if (node.val <= currentMax) {
-            result = false;
-            return;
-        }
-
-        currentMax = node.val;
-        inOrder(node.right);
+        return true;
     }
 }
