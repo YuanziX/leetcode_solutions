@@ -1,5 +1,6 @@
 class Solution {
     public int fib(int n) {
+        System.gc();
         if (n < 2) return n;
         int a = 0, b = 1;
 
