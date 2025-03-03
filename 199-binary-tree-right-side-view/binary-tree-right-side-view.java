@@ -15,25 +15,21 @@
  */
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> marked = new ArrayList<>();
         List<Integer> res = new ArrayList<>();
-
-        doSum(root, 0, marked, res);
-
+        traverse(root, 0, res);
         return res;
     }
 
-    public void doSum(TreeNode node, int level, List<Integer> marked, List<Integer> res) {
+    public void traverse(TreeNode node, int level, List<Integer> res) {
         if (node == null) {
             return;
         }
 
-        if (!marked.contains(level)) {
-            marked.add(level);
+        if (res.size() == level) {
             res.add(node.val);
         }
 
-        doSum(node.right, level + 1, marked, res);
-        doSum(node.left, level + 1, marked, res);
+        traverse(node.right, level + 1,res);
+        traverse(node.left, level + 1, res);
     }
 }
