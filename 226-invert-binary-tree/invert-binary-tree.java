@@ -15,6 +15,7 @@
  */
 class Solution {
     public TreeNode invertTree(TreeNode root) {
+        System.gc();
         Stack<TreeNode> stack = new Stack<>();
         TreeNode node = root;
         TreeNode temp = null;
