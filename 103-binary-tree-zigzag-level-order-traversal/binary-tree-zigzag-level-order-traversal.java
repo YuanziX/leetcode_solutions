@@ -45,6 +45,7 @@ class Solution {
             dirLeft = !dirLeft;
         }
 
+        System.gc();
         return result;
     }
 }
