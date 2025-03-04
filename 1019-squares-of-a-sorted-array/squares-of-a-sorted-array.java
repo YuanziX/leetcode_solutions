@@ -1,5 +1,10 @@
 class Solution {
     public int[] sortedSquares(int[] nums) {
-        return Arrays.stream(nums).map(i -> i * i).sorted().toArray();
+        for (int i = 0; i < nums.length; i++) {
+            nums[i] = nums[i] * nums[i];
+        }
+
+        Arrays.sort(nums);
+        return nums;
     }
 }
