@@ -15,7 +15,6 @@
  */
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        System.gc();
         List<List<Integer>> result = new ArrayList<>();
         if (root == null) return result;
 
