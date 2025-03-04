@@ -25,7 +25,6 @@ class Solution {
         st.push(root);
 
         while (st.empty() == false) {
-
             TreeNode node = st.pop();
             TreeNode temp = node.left;
             node.left = null;
