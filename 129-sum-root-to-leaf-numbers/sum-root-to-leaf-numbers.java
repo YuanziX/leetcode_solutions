@@ -28,12 +28,6 @@ class Solution {
             return helper(node.left, num);
         }
 
-        int n1 = num, n2 = num;
-        if (node.left != null)
-            n1 = helper(node.left, num);
-        if (node.right != null)
-            n2 = helper(node.right, num);
-
-        return (n1 + n2);
+        return helper(node.left, num) + helper(node.right, num);
     }
 }
