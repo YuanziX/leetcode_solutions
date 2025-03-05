@@ -1,33 +1,71 @@
-import java.util.PriorityQueue;
-
 class Solution {
-    public int minCostConnectPoints(int[][] points) {
-        int n = points.length;
-        int minCost = 0;
-        boolean[] visited = new boolean[n];
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> Integer.compare(a[0], b[0]));
-        
-        pq.offer(new int[]{0, 0});
-        
-        while (!pq.isEmpty()) {
-            int[] curr = pq.poll();
-            int cost = curr[0], u = curr[1];
-            
-            if (visited[u]) {
-                continue;
-            }
+    static class Edge implements Comparable<Edge> {
+        int s, d, w;
+        public Edge(int s, int d, int w) {
+            this.s = s;
+            this.d = d;
+            this.w = w;
+        }
 
-            visited[u] = true;
-            minCost += cost;
+        public int compareTo(Edge o) {
+            return this.w - o.w;
+        }
+    }
 
-            for (int v = 0; v < n; v++) {
-                if (!visited[v]) {
-                    int dist = Math.abs(points[u][0] - points[v][0]) + Math.abs(points[u][1] - points[v][1]);
-                    pq.offer(new int[]{dist, v});
-                }
+    static class DisjointSet {
+        int[] rank;
+        int[] parent;
+
+        public DisjointSet(int v) {
+            rank = new int[v];
+            parent = new int[v];
+
+            for (int i = 0; i < v; i++) {
+                rank[i] = 0;
+                parent[i] = i;
             }
         }
-        
-        return minCost;
+
+        int findParent(int v) {
+            if (parent[v] != v) {
+                return findParent(parent[v]);
+            }
+            return parent[v];
+        }
+
+        void union(int x, int y) {
+            int xp = findParent(x);
+            int yp = findParent(y);
+
+            if (rank[xp] > rank[yp]) {
+                parent[yp] = xp;
+            } else if (rank[yp] > rank[xp]) {
+                parent[xp] = yp;
+            } else {
+                parent[yp] = xp;
+                rank[xp]++;
+            }
+        }
+    }
+
+    public int minCostConnectPoints(int[][] points) {
+        List<Edge> edges = new ArrayList<>();
+        for (int i = 0; i < points.length; i++) {
+            for (int j = i + 1; j < points.length; j++) {
+                edges.add(new Edge(i, j, Math.abs(points[i][0] - points[j][0]) + Math.abs(points[i][1] - points[j][1])));
+            }
+        }
+
+        Collections.sort(edges);
+        int mc = 0;
+        DisjointSet ds = new DisjointSet(points.length);
+        for (Edge e: edges) {
+            if (ds.findParent(e.s) != ds.findParent(e.d)) {
+                ds.union(e.s, e.d);
+                mc += e.w;
+            }
+        }
+
+        return mc;
     }
 }
