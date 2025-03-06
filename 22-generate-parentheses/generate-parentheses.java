@@ -1,22 +1,26 @@
 class Solution {
-    private void recursive(int n, StringBuilder dat, int numOpen, int numClosed, List<String> res) {
-        if (dat.length() == 2*n) {
-            res.add(dat.toString());
+    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<>();
+        helper(n, new StringBuilder(), 0, 0, res);
+        return res;
+    }
+
+    public void helper(int n, StringBuilder curr, int l, int r, List<String> res) {
+        if (l + r == 2 * n) {
+            res.add(curr.toString());
             return;
         }
 
-        if (numOpen < n) {
-            recursive(n, new StringBuilder(dat).append("("), numOpen+1, numClosed, res);
+        if (l < n) {
+            curr.append('(');
+            helper(n, curr, l + 1, r, res);
+            curr.setLength(curr.length() - 1);
         }
 
-        if (numOpen > numClosed) {
-            recursive(n, new StringBuilder(dat).append(")"), numOpen, numClosed+1, res);
+        if (r < l) {
+        curr.append(')');
+            helper(n, curr, l, r + 1, res);
+            curr.setLength(curr.length() - 1);
         }
-    }
-
-    public List<String> generateParenthesis(int n) {
-        List<String> res = new ArrayList<>();
-        recursive(n, new StringBuilder("("), 1, 0, res);
-        return res;
     }
 }
