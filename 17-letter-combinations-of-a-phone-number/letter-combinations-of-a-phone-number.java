@@ -1,14 +1,5 @@
 class Solution {
-    Map<Integer, char[]> map = new HashMap<>() {{
-        put(2, new char[]{'a', 'b', 'c'});
-        put(3, new char[]{'d', 'e', 'f'});
-        put(4, new char[]{'g', 'h', 'i'});
-        put(5, new char[]{'j', 'k', 'l'});
-        put(6, new char[]{'m', 'n', 'o'});
-        put(7, new char[]{'p', 'q', 'r', 's'});
-        put(8, new char[]{'t', 'u', 'v'});
-        put(9, new char[]{'w', 'x', 'y', 'z'});
-    }};
+    String[] map = new String[]{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
     public List<String> letterCombinations(String digits) {
         List<String> res = new ArrayList<>();
@@ -24,10 +15,9 @@ class Solution {
             return;
         }
 
-        char[] combo = map.get(Character.getNumericValue(digits.charAt(pos)));
-        if (combo == null) return;
+        String combo = map[Character.getNumericValue(digits.charAt(pos))];
 
-        for (char c: combo) {
+        for (char c: combo.toCharArray()) {
             helper(digits, curr + c, pos + 1, res);
         }
     }
