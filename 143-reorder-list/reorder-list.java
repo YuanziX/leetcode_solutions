@@ -8,45 +8,44 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-
 class Solution {
     public void reorderList(ListNode head) {
-        ListNode slow = head, fast = head;
+        if (head.next == null) return;
+        
+        ListNode slow = head;
+        ListNode fast = head.next.next;
 
-        while (fast.next != null && fast.next.next != null) {
+        while (fast != null && fast.next != null) {
             fast = fast.next.next;
             slow = slow.next;
         }
 
-        ListNode middle = slow.next;
+        ListNode mid = slow.next;
         slow.next = null;
 
-        ListNode before = null, current = middle, after;
-        while (current != null) {
-            after = current.next;
-            current.next = before;
-            before = current;
-            current = after;
+        ListNode prev = null, next;
+
+        while (mid != null) {
+            next = mid.next;
+            mid.next = prev;
+            prev = mid;
+            mid = next;
         }
 
-        ListNode l1 = head, l2 = before;
+        mid = prev;
+
         ListNode dummy = new ListNode(-1);
         ListNode tail = dummy;
-        while (l1 != null && l2 != null) {
-            tail.next = l1;
-            l1 = l1.next;
+
+        while (head != null && mid != null) {
+            tail.next = head;
             tail = tail.next;
-            tail.next = l2;
-            l2 = l2.next;
+            head = head.next;
+            tail.next = mid;
             tail = tail.next;
+            mid = mid.next;
         }
 
-        if (l1 == null) {
-            tail.next = l2;
-        } else {
-            tail.next = l1;
-        }
-        
         head = dummy.next;
     }
 }
