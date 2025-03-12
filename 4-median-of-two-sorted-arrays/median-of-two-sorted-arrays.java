@@ -21,7 +21,7 @@ class Solution {
         while (l2 < n2) {
             merged[ptr++] = nums2[l2++];
         }
-        System.out.println(Arrays.toString(merged));
+
         if (ptr % 2 != 0) return merged[ptr / 2];
         return ((double) merged[ptr / 2 - 1] + merged[ptr / 2]) / 2;
     }
