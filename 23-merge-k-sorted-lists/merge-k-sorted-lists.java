@@ -28,18 +28,21 @@ class Solution {
         return dummy.next;
     }
 
-    private ListNode divideAndMerge(ListNode[] lists) {
-        for (int i = 0; i < lists.length - 1; i++) {
-            lists[i + 1] = join2List(lists[i], lists[i + 1]);
-        }
+    private ListNode divideAndMerge(ListNode[] lists, int l, int r) {
+        if (l == r) return lists[r];
 
-        return lists[lists.length - 1];
+        int mid = (l + r) / 2;
+
+        ListNode l1 = divideAndMerge(lists, l, mid);
+        ListNode l2 = divideAndMerge(lists, mid + 1, r);
+
+        return join2List(l1, l2);
     }
 
     public ListNode mergeKLists(ListNode[] lists) {
         if (lists.length == 0) return null;
         if (lists.length == 1) return lists[0];
         
-        return divideAndMerge(lists);
+        return divideAndMerge(lists, 0, lists.length - 1);
     }
 }
