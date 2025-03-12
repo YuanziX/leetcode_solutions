@@ -9,37 +9,37 @@
  * }
  */
 class Solution {
+    private ListNode join2List(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(-1);
+        ListNode tail = dummy;
+
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                tail.next = l1;
+                l1 = l1.next;
+            } else {
+                tail.next = l2;
+                l2 = l2.next;
+            }
+            tail = tail.next;
+        }
+
+        tail.next = l1 == null ? l2 : l1;
+        return dummy.next;
+    }
+
+    private ListNode divideAndMerge(ListNode[] lists) {
+        for (int i = 0; i < lists.length - 1; i++) {
+            lists[i + 1] = join2List(lists[i], lists[i + 1]);
+        }
+
+        return lists[lists.length - 1];
+    }
+
     public ListNode mergeKLists(ListNode[] lists) {
         if (lists.length == 0) return null;
         if (lists.length == 1) return lists[0];
-
-        ListNode merged = null;
-        for (ListNode l: lists) {
-            ListNode dummy = new ListNode(-1);
-            ListNode tail = dummy;
-            ListNode head1 = merged;
-            ListNode head2 = l;
-
-            while (head1 != null && head2 != null) {
-                if (head1.val < head2.val) {
-                    tail.next = head1;
-                    head1 = head1.next;
-                } else {
-                    tail.next = head2;
-                    head2 = head2.next;
-                }
-                tail = tail.next;
-            }
-
-            if (head1 == null) {
-                tail.next = head2;
-            } else {
-                tail.next = head1;
-            }
-            
-            merged = dummy.next;
-        }
-
-        return merged;
+        
+        return divideAndMerge(lists);
     }
 }
