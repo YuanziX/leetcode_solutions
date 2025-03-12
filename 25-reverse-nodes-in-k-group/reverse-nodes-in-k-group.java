@@ -10,53 +10,39 @@
  */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        int l = len(head);
-        if (l < k) {
-            return head;
-        }
+        if (head.next == null) return head;
 
+        int len = len(head);
         ListNode dummy = new ListNode(-1);
         ListNode tail = dummy;
-        ListNode current = head;
+        ListNode curr = head;
 
-        // iterate for n k-groups
-        for (int i = 0; i < l / k; i++) {
-            // keep pointer on first node, this will be reversed so it'll be at the end
-            // 1 -> 2
-            // ^
-            ListNode first = current;
-            ListNode before = null, after;
-
-            // revert jth k-group
+        for (int i = 0; i < len / k; i ++) {
+            ListNode prev = null, after;       
             for (int j = 0; j < k; j++) {
-                after = current.next;
-                current.next = before;
-                before = current;
-                current = after;
+                after = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = after;
             }
 
-            // attach reversed k-group to dummy node
-            tail.next = before;
-            // move tail to end of the reversed k group which is the actual new tail
-            // reversed = 2 -> 1
-            //                 ^ 'first' pointer
-            tail = first;
+            tail.next = prev;
+            while (tail.next != null) {
+                tail = tail.next;
+            }
         }
-
-        // attach remaining nodes
-        // left over from non k-group (li < k)
-        tail.next = current;
+        tail.next = curr;
 
         return dummy.next;
     }
 
     private int len(ListNode head) {
+        ListNode c = head;
         int l = 0;
 
-        ListNode curr = head;
-        while (curr != null) {
+        while (c != null) {
             l++;
-            curr = curr.next;
+            c = c.next;
         }
 
         return l;
