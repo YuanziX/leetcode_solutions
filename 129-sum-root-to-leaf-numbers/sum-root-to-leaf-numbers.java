@@ -18,16 +18,20 @@ class Solution {
         return helper(root, 0);
     }
 
-    public int helper(TreeNode node, int num) {
-        num = num * 10 + node.val;
-        if (node.left == null && node.right == null) return num;
-        if (node.left == null && node.right != null) {
-            return helper(node.right, num);
-        }
-        if (node.left != null && node.right == null) {
-            return helper(node.left, num);
-        }
+    public int helper(TreeNode node, int sum) {
+        sum = 10 * sum + node.val;
+        if (node.left == null && node.right == null)
+            return sum;
 
-        return helper(node.left, num) + helper(node.right, num);
+        if (node.left == null)
+            return helper(node.right, sum);
+        
+        if (node.right == null)
+            return helper(node.left, sum);
+
+        int n1 = helper(node.left, sum);
+        int n2 = helper(node.right, sum);
+
+        return n1 + n2;
     }
 }
