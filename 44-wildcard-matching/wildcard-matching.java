@@ -17,7 +17,7 @@ class Solution {
             }
             return true;
         } else if (p2 == n2) {
-            return n1 == p1;
+            return false;
         }
 
         if (memo[p1][p2] != -1) {
