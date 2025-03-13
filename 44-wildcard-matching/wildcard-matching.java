@@ -1,14 +1,14 @@
 class Solution {
     public boolean isMatch(String s, String p) {
-        Boolean[][] memo = new Boolean[s.length()][p.length()];
-        for (Boolean[] i: memo) {
-            Arrays.fill(i, null);
+        int[][] memo = new int[s.length()][p.length()];
+        for (int[] i: memo) {
+            Arrays.fill(i, -1);
         }
 
         return helper(s, p, s.length(), p.length(), 0, 0, memo);
     }
 
-    private boolean helper(String s, String p, int n1, int n2, int p1, int p2, Boolean[][] memo) {
+    private boolean helper(String s, String p, int n1, int n2, int p1, int p2, int[][] memo) {
         if (p1 == n1) {
             while (p2 <  n2) {
                 if (p.charAt(p2++) != '*') {
@@ -20,8 +20,8 @@ class Solution {
             return n1 == p1;
         }
 
-        if (memo[p1][p2] != null) {
-            return memo[p1][p2];
+        if (memo[p1][p2] != -1) {
+            return memo[p1][p2] == 1;
         }
 
         boolean res = false;
@@ -35,7 +35,8 @@ class Solution {
 
             res = c1 || c2;
         }
-
-        return memo[p1][p2] = res;
+        
+        memo[p1][p2] = res ? 1 : 0;
+        return res;
     }
 }
