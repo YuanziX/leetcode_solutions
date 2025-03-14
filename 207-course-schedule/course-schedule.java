@@ -22,8 +22,12 @@ class Solution {
             if (indeg[i] == 0) q.add(i);
         }
 
+        int[] topo = new int[c];
+        int ptr = 0;
+
         while (!q.isEmpty()) {
             int node = q.poll();
+            topo[ptr++] = node;
 
             for (int i: g.get(node)) {
                 indeg[i]--;
@@ -33,12 +37,6 @@ class Solution {
             }
         }
 
-        for (int i = 0; i < c; i++) {
-            if (indeg[i] != 0) {
-                return false;
-            }
-        }
-
-        return true;
+        return ptr == c;
     }
 }
