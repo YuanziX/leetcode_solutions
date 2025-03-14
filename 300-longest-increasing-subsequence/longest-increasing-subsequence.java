@@ -1,24 +1,37 @@
 class Solution {
     public int lengthOfLIS(int[] nums) {
-        int n = nums.length;
-        int[][] memo = new int[n][n+1];
-        for (int[] i: memo) {
-            Arrays.fill(i, -1);
+        int[] dp = new int[nums.length + 1];
+        dp[0] = Integer.MIN_VALUE;
+        int ptr = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            if (dp[ptr] < nums[i]) {
+                ptr++;
+                dp[ptr] = nums[i];
+            } else {
+                dp[lowerBound(dp, ptr + 1, nums[i])] = nums[i];
+            }
         }
 
-        return helper(-1, 0, nums, memo);
+        return ptr;
     }
 
-    public int helper(int prev, int i, int[] nums, int[][] memo) {
-        if (i == nums.length) return 0;
-        if (memo[i][prev+1] != -1) return memo[i][prev+1];
+    public static int lowerBound(int []arr, int n, int x) {
+        int ans = n;
 
-        int c1 = 0;
-        if (prev == -1 || nums[i] > nums[prev]) {
-            c1 = helper(i, i + 1, nums, memo) + 1;
+        int l = 0, r = n - 1;
+
+        while (l <= r) {
+            int m = (l + r) / 2;
+
+            if (arr[m] >= x) {
+                ans = m;
+                r = m - 1;
+            } else {
+                l = m + 1;
+            }
         }
-        int c2 = helper(prev, i + 1, nums, memo);
 
-        return memo[i][prev+1] = Math.max(c1, c2);
+        return ans;
     }
 }
