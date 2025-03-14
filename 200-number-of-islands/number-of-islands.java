@@ -1,29 +1,31 @@
 class Solution {
-    void markAllAdjacentOnes(int row, int col, char[][] grid, int m, int n) {
-        if (row < 0 || col < 0 || row >= m || col >= n || grid[row][col] == '0') {
-            return;
-        }
-        grid[row][col] = '0';
-        markAllAdjacentOnes(row - 1, col, grid, m, n);
-        markAllAdjacentOnes(row + 1, col, grid, m, n);
-        markAllAdjacentOnes(row, col - 1, grid, m, n);
-        markAllAdjacentOnes(row, col + 1, grid, m, n);
-    }
-
     public int numIslands(char[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-        int islandsCount = 0;
+        int n = grid.length;
+        int m = grid[0].length;
 
-        for (int row = 0; row < m; row++) {
-            for (int col = 0; col < n; col++) {
-                if (grid[row][col] == '1') {
-                    markAllAdjacentOnes(row, col, grid, m, n);
-                    islandsCount++;
+        int num = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] == '1') {
+                    num++;
+                    markAdj(n, m, i, j, grid);
                 }
             }
         }
 
-        return islandsCount;
+        return num;
+    }
+
+    void markAdj(int n, int m, int r, int c, char[][] grid) {
+        if (r < 0 || r > n - 1 || c < 0 || c > m - 1 || grid[r][c] == '0') {
+            return;
+        }
+
+        grid[r][c] = '0';
+        markAdj(n, m, r + 1, c, grid);
+        markAdj(n, m, r - 1, c, grid);
+        markAdj(n, m, r, c + 1, grid);
+        markAdj(n, m, r, c - 1, grid);
     }
 }
