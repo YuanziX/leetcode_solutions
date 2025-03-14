@@ -37,12 +37,6 @@ class Solution {
             }
         }
 
-        for (int i = 0; i < c; i++) {
-            if (indeg[i] != 0) {
-                return new int[]{};
-            }
-        }
-
-        return topo;
+        return ptr == c ? topo : new int[] {};
     }
 }
