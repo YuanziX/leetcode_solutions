@@ -1,26 +1,24 @@
 class Solution {
-    String[] map = new String[]{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-
+    String[] dict = new String[] {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
     public List<String> letterCombinations(String digits) {
         List<String> res = new ArrayList<>();
-        if (digits.length() == 0) return res;
+        if (digits.equals("")) return res;
 
-        helper(digits, new StringBuilder(), 0, res);
+        helper(new StringBuilder(), 0, digits, res);
+
         return res;
     }
 
-    public void helper(String digits, StringBuilder curr, int pos, List<String> res) {
-        if (pos == digits.length()) {
-            res.add(curr.toString());
+    private void helper(StringBuilder sb, int ind, String digits, List<String> res) {
+        if (digits.length() == ind) {
+            res.add(sb.toString());
             return;
         }
 
-        String combo = map[Character.getNumericValue(digits.charAt(pos))];
-
-        for (char c: combo.toCharArray()) {
-            curr.append(c);
-            helper(digits, curr, pos + 1, res);
-            curr.setLength(curr.length() - 1);
+        for (char c: dict[digits.charAt(ind) - '0'].toCharArray()) {
+            sb.append(c);
+            helper(sb, ind + 1, digits, res);
+            sb.setLength(sb.length() - 1);
         }
     }
 }
