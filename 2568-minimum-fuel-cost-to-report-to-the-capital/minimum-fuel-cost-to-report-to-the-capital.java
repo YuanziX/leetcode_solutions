@@ -1,47 +1,30 @@
 class Solution {
-    static int n;
-    static int[] head = new int[200002];
-    static int[] next = new int[200002];
-    static int[] to = new int[200002];
-    static long[] cost = new long[200002];
-    static int[] size = new int[200002];
-    static int cnt;
-
+    long ans = 0;
     public long minimumFuelCost(int[][] roads, int seats) {
-        n = roads.length + 1;
-        build();
-        for (int[] road : roads) {
-            next[cnt] = head[road[0]];
-            to[cnt] = road[1];
-            head[road[0]] = cnt++;
-
-            next[cnt] = head[road[1]];
-            to[cnt] = road[0];
-            head[road[1]] = cnt++;
+        if (roads.length == 0) return 0;
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < roads.length + 1; i++) {
+            adj.add(new ArrayList<>());
         }
-        f(0, -1, seats);
-        return cost[0];
+
+        for (int[] i: roads) {
+            adj.get(i[0]).add(i[1]);
+            adj.get(i[1]).add(i[0]);
+        }
+
+        dfs(0, 0, adj, seats);
+        return ans;
     }
 
-    void f(int curr, int prev, int seats) {
-        for (int i = head[curr]; i > 0; i = next[i]) {
-            if (to[i] != prev) {
-                f(to[i], curr, seats);
-                size[curr] += size[to[i]];
-                cost[curr] += cost[to[i]];
-                cost[curr] += (size[to[i]] + seats - 1) / seats;
-            }
-        }
-    }
+    public int dfs(int i, int prev, List<List<Integer>> adj, int seats) {
+        int people = 1;
 
-    private void build() {
-        cnt = 1;
-        for (int i = 0; i < n; i++) {
-            head[i] = 0;
-            next[i] = 0;
-            to[i] = 0;
-            cost[i] = 0;
-            size[i] = 1;
+        for (int x: adj.get(i)) {
+            if (x == prev) continue;
+            people += dfs(x, i, adj, seats);
         }
+
+        if (i != 0) ans += people / seats + (people % seats == 0 ? 0 : 1);
+        return people;
     }
 }
