@@ -6,15 +6,10 @@ class Solution {
             g.add(new ArrayList<>());
         }
 
+        int[] indeg = new int[c];
         for (int[] rel: prereq) {
             g.get(rel[1]).add(rel[0]);
-        }
-
-        int[] indeg = new int[c];
-        for (List<Integer> li: g) {
-            for (int i: li) {
-                indeg[i]++;
-            }
+            indeg[rel[0]]++;
         }
 
         Queue<Integer> q = new LinkedList<>();
@@ -22,12 +17,11 @@ class Solution {
             if (indeg[i] == 0) q.add(i);
         }
 
-        int[] topo = new int[c];
         int ptr = 0;
 
         while (!q.isEmpty()) {
             int node = q.poll();
-            topo[ptr++] = node;
+            ptr++;
 
             for (int i: g.get(node)) {
                 indeg[i]--;
