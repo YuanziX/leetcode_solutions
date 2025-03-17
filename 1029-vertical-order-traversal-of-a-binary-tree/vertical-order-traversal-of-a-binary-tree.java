@@ -19,28 +19,31 @@ class Solution {
         if (root == null)
             return res;
 
-        Map<Integer, Map<Integer, ArrayList<Integer>>> hm = new TreeMap<>();
+        Map<Integer, Map<Integer, PriorityQueue<Integer>>> hm = new TreeMap<>();
 
         helper(root, 0, 0, hm);
 
-        for (Map.Entry<Integer, Map<Integer, ArrayList<Integer>>> outer : hm.entrySet()) {
+        for (Map.Entry<Integer, Map<Integer, PriorityQueue<Integer>>> outer : hm.entrySet()) {
             List<Integer> sub = new ArrayList<>();
 
-            for (Map.Entry<Integer, ArrayList<Integer>> inner : outer.getValue().entrySet()) {
-                Collections.sort(inner.getValue());
-                sub.addAll(inner.getValue());
+            for (Map.Entry<Integer, PriorityQueue<Integer>> inner : outer.getValue().entrySet()) {
+                // Collections.sort(inner.getValue());
+
+                while (!inner.getValue().isEmpty()) {
+                    sub.add(inner.getValue().poll());
+                }
             }
             res.add(sub);
         }
         return res;
     }
 
-    public void helper(TreeNode node, int x, int y, Map<Integer, Map<Integer, ArrayList<Integer>>> hm) {
+    public void helper(TreeNode node, int x, int y, Map<Integer, Map<Integer, PriorityQueue<Integer>>> hm) {
         if (node == null)
             return;
 
         hm.computeIfAbsent(x, k -> new TreeMap<>())
-                .computeIfAbsent(y, k -> new ArrayList<>())
+                .computeIfAbsent(y, k -> new PriorityQueue<>())
                 .add(node.val);
 
         helper(node.left, x - 1, y + 1, hm);
