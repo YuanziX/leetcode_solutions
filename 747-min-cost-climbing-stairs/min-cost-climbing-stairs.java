@@ -1,9 +1,5 @@
 class Solution {
     public int minCostClimbingStairs(int[] cost) {
-        return tabulation(cost);
-    }
-
-	public int tabulation(int[] cost) {
         if (cost.length == 2) return Math.min(cost[0], cost[1]);
 
 		int n = cost.length;
@@ -26,5 +22,6 @@ class Solution {
 		}
 
 		return Math.min(c1, i1);
-	}
+    }
+
 }
