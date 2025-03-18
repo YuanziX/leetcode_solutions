@@ -1,24 +1,25 @@
 class Solution {
-    public String fractionAddition(String expression) {
+    public String fractionAddition(String exp) {
         int numerator = 0, denominator = 1;
+        char[] expression = exp.toCharArray();
 
-        int i = 0, n = expression.length();
+        int i = 0, n = expression.length;
         while (i < n) {
             int sign = 1;
-            if (expression.charAt(i) == '+' || expression.charAt(i) == '-') {
-                sign = expression.charAt(i) == '-' ? -1 : 1;
+            if (expression[i] == '+' || expression[i] == '-') {
+                sign = expression[i] == '-' ? -1 : 1;
                 i++;
             }
 
             int numStart = i;
-            while (i < n && Character.isDigit(expression.charAt(i))) i++;
-            int num = Integer.parseInt(expression.substring(numStart, i));
+            while (i < n && Character.isDigit(expression[i])) i++;
+            int num = Integer.parseInt(exp.substring(numStart, i));
 
             i++;
 
             int denomStart = i;
-            while (i < n && Character.isDigit(expression.charAt(i))) i++;
-            int denom = Integer.parseInt(expression.substring(denomStart, i));
+            while (i < n && Character.isDigit(expression[i])) i++;
+            int denom = Integer.parseInt(exp.substring(denomStart, i));
 
             numerator = numerator * denom + sign * num * denominator;
             denominator *= denom;
