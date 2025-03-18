@@ -1,24 +1,24 @@
 class Solution {
     public int uniquePaths(int m, int n) {
+        if (m == 1 && n == 1) return 1;
+        if (m == 1) return 1;
+        if (n == 1) return 1;
+
         int[][] memo = new int[m][n];
-        for (int[] j: memo) {
-            Arrays.fill(j, -1);
+
+        memo[m - 1][n - 1] = 0;
+        memo[m - 2][n - 1] = 1;
+        memo[m - 1][n - 2] = 1;
+        
+        for (int i = m - 1; i > -1; i--) {
+            for (int j = n - 1; j > -1; j--) {
+                if (i < m - 1)
+                    memo[i][j] += memo[i + 1][j];
+                if (j < n - 1)
+                    memo[i][j] += memo[i][j + 1];
+            }
         }
 
-        return helper(m, n, 0, 0, memo);
-    }
-
-    int helper(int m, int n, int i, int j, int[][] memo) {
-        if (i == m - 1 && j == n - 1) return 1;
-        if (i >= m || j >= n) return 0;
-
-        if (memo[i][j] != -1) {
-            return memo[i][j];
-        }
-
-        int n1 = helper(m, n, i + 1, j, memo);
-        int n2 = helper(m, n, i, j + 1, memo);
-
-        return memo[i][j] = n1 + n2;
+        return memo[0][0];
     }
 }
