@@ -16,9 +16,8 @@ class Solution {
             return memo[i][j];
         }
 
-        int n1 = 0, n2 = 0;
-        n1 = helper(m, n, i + 1, j, memo);
-        n2 = helper(m, n, i, j + 1, memo);
+        int n1 = helper(m, n, i + 1, j, memo);
+        int n2 = helper(m, n, i, j + 1, memo);
 
         return memo[i][j] = n1 + n2;
     }
