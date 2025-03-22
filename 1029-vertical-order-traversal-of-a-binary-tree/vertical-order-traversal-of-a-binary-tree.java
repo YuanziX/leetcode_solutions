@@ -16,37 +16,32 @@
 class Solution {
     public List<List<Integer>> verticalTraversal(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
-        if (root == null)
-            return res;
+        if (root == null) return res;
 
-        Map<Integer, Map<Integer, PriorityQueue<Integer>>> hm = new TreeMap<>();
-
-        helper(root, 0, 0, hm);
-
-        for (Map.Entry<Integer, Map<Integer, PriorityQueue<Integer>>> outer : hm.entrySet()) {
-            List<Integer> sub = new ArrayList<>();
+        Map<Integer, Map<Integer, PriorityQueue<Integer>>> map = new TreeMap<>();
+        helper(root, 0, 0, map);
+        for (Map.Entry<Integer, Map<Integer, PriorityQueue<Integer>>> outer: map.entrySet()) {
+            List<Integer> ls = new ArrayList<>();
 
             for (Map.Entry<Integer, PriorityQueue<Integer>> inner : outer.getValue().entrySet()) {
-                // Collections.sort(inner.getValue());
-
                 while (!inner.getValue().isEmpty()) {
-                    sub.add(inner.getValue().poll());
+                    ls.add(inner.getValue().poll());
                 }
             }
-            res.add(sub);
+
+            res.add(ls);
         }
+
         return res;
     }
 
-    public void helper(TreeNode node, int x, int y, Map<Integer, Map<Integer, PriorityQueue<Integer>>> hm) {
-        if (node == null)
-            return;
+    void helper(TreeNode node, int x, int y, Map<Integer, Map<Integer, PriorityQueue<Integer>>> map) {
+        if (node == null) return;
 
-        hm.computeIfAbsent(x, k -> new TreeMap<>())
-                .computeIfAbsent(y, k -> new PriorityQueue<>())
-                .add(node.val);
+        map.computeIfAbsent(x, k -> new TreeMap<>())
+        .computeIfAbsent(y, k -> new PriorityQueue<>()).add(node.val);
 
-        helper(node.left, x - 1, y + 1, hm);
-        helper(node.right, x + 1, y + 1, hm);
-    }
+        helper(node.left, x - 1, y + 1, map);
+        helper(node.right, x + 1, y + 1, map);
+    } 
 }
