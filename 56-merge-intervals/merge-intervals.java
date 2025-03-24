@@ -8,12 +8,12 @@ class Solution {
         int ptr = 0;
 
         for (int i = 1; i < n; i++) {
-            int prevEnd = merged.get(ptr)[1];
+            int[] prev = merged.get(ptr);
             int start = intervals[i][0];
             int end = intervals[i][1];
 
-            if (start <= prevEnd) {
-                merged.get(ptr)[1] = Math.max(prevEnd, end);
+            if (start <= prev[1]) {
+                prev[1] = Math.max(prev[1], end);
             } else {
                 merged.add(intervals[i]);
                 ++ptr;
