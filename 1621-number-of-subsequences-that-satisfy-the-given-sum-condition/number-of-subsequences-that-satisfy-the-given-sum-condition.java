@@ -1,22 +1,28 @@
 class Solution {
     public int numSubseq(int[] nums, int target) {
-        int res = 0, mod = 1000000007, l = 0, r = nums.length - 1;
-        List<Integer> pre = new ArrayList<>();
-        pre.add(1);
-        for (int i = 1; i <= nums.length; ++i) {
-            pre.add((pre.get(i - 1) << 1) % mod);
+        Arrays.sort(nums);
+        int mod = 1_000_000_000 + 7;
+        int ans = 0;
+        int l = 0;
+        int r = nums.length-1;
+
+        int len = nums.length;
+
+        int[] power = new int[len];
+        power[0] = 1;
+        for (int i = 1; i < len; ++i) {
+            power[i] = (power[i - 1] * 2) % mod;
         }
 
-        Arrays.sort(nums);
-
-        while (l <= r) {
-            if (nums[l] + nums[r] > target) {
-                r--;
+        while(l<=r) {
+            if(nums[l] + nums[r] <= target) {
+                int n = r - l;
+                ans = (ans + power[n]) % mod;
+                l++;
             } else {
-                res = (res + pre.get(r - l++)) % mod;
+                r--;
             }
         }
-
-        return res;
+        return ans;
     }
 }
