@@ -5,9 +5,13 @@ class Solution {
         while (i < nums1.length && j < nums2.length) {
             if (nums1[i] == nums2[j]) return nums1[i];
 
-            if (nums1[i] < nums2[j]) {
+            while (i < nums1.length && nums1[i] < nums2[j]) {
                 i++;
-            } else {
+            }
+
+            if (i >= nums1.length) break;
+
+            while (j < nums2.length && nums2[j] < nums1[i]) {
                 j++;
             }
         }
