@@ -1,23 +1,14 @@
 class Solution {
     public List<Integer> partitionLabels(String s) {
-        Map<Character, Integer> start = new HashMap<>();
         Map<Character, Integer> end = new HashMap<>();
 
         for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (!start.containsKey(c)) {
-                start.put(c, i);
-            }
-            end.put(c, i);
+            end.put(s.charAt(i), i);
         }
 
         List<int[]> intervals = new ArrayList<>();
-        Set<Character> uniqueChars = new HashSet<>();
-        for (char c : s.toCharArray()) {
-            uniqueChars.add(c);
-        }
-        for (char c : uniqueChars) {
-            intervals.add(new int[] { start.get(c), end.get(c) });
+        for (int i = 0; i < s.length(); i++) {
+            intervals.add(new int[] { i, end.get(s.charAt(i)) });
         }
         Collections.sort(intervals, (a, b) -> a[0] - b[0]);
 
