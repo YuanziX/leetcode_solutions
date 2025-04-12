@@ -3,11 +3,11 @@ class Solution {
         List<List<Integer>> res = new LinkedList<>();
         if (nums.length == 0) return res;
 
-        helper(nums, new LinkedList<Integer>(), res);
+        helper(nums, new LinkedHashSet<Integer>(), res);
         return res;
     }
-    
-    private void helper(int[] nums, List<Integer> sub, List<List<Integer>> res) {
+
+    private void helper(int[] nums, Set<Integer> sub, List<List<Integer>> res) {
         if (sub.size() == nums.length) {
             res.add(new ArrayList<>(sub));
             return;
@@ -17,7 +17,7 @@ class Solution {
             if (!sub.contains(i)) {
                 sub.add(i);
                 helper(nums, sub, res);
-                sub.remove(sub.size() - 1);
+                sub.remove(i);
             }
         }
     }
