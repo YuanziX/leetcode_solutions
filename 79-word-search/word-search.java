@@ -1,5 +1,8 @@
 class Solution {
     public boolean exist(char[][] board, String word) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(word).reverse();
+        word = sb.toString();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 if (helper(board, word, 0, i, j)) return true;
