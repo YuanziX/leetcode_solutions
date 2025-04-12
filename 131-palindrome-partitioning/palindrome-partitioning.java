@@ -1,6 +1,4 @@
 class Solution {
-    Set<String> palindromes = new HashSet<>();
-
     public List<List<String>> partition(String s) {
         List<List<String>> res = new ArrayList<>();
         helper(s, 0, 0, 0, new ArrayList<>(), res);
@@ -16,9 +14,8 @@ class Solution {
         }
 
         String substring = s.substring(start, i + 1);
-        if (palindromes.contains(substring) || isPalindrome(substring)) {
+        if (isPalindrome(substring)) {
             sub.add(substring);
-            palindromes.add(substring);
             helper(s, i + 1, i + 1, len + i - start + 1, sub, res);
             sub.remove(sub.size() - 1);
         }
