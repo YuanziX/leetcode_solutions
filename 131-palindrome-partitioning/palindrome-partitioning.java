@@ -1,18 +1,13 @@
 class Solution {
     public List<List<String>> partition(String s) {
         List<List<String>> res = new ArrayList<>();
-        helper(s, 0, 0, new ArrayList<>(), res);
+        helper(s, 0, 0, 0, new ArrayList<>(), res);
         return res;
     }
 
-    void helper(String s, int start, int i, List<String> sub, List<List<String>> res) {
+    void helper(String s, int start, int i, int len, List<String> sub, List<List<String>> res) {
         if (i == s.length()) {
-            StringBuilder sb = new StringBuilder();
-            for (String ss: sub) {
-                sb.append(ss);
-            }
-
-            if (sb.toString().equals(s))
+            if (len == i)
                 res.add(new ArrayList<>(sub));
 
             return;
@@ -20,11 +15,11 @@ class Solution {
 
         if (isPalindrome(s.substring(start, i + 1))) {
             sub.add(s.substring(start, i + 1));
-            helper(s, i + 1, i + 1, sub, res);
+            helper(s, i + 1, i + 1, len + i - start + 1, sub, res);
             sub.remove(sub.size() - 1);
         }
 
-        helper(s, start, i + 1, sub, res);
+        helper(s, start, i + 1, len, sub, res);
     } 
 
     boolean isPalindrome(String s) {
