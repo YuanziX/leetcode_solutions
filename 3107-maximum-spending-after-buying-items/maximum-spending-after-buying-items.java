@@ -3,17 +3,17 @@ class Solution {
         int m = values.length, n = values[0].length;
         long spending = 0;
 
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        PriorityQueue<Long> pq = new PriorityQueue<>();
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                pq.add(values[i][j]);
+                pq.add((long) values[i][j]);
             }
         }
 
         int k = 1;
         while (!pq.isEmpty()) {
-            spending += (long) pq.poll() * k++;
+            spending += pq.poll() * k++;
         }
 
         return spending;
