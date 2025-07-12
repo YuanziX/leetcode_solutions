@@ -13,7 +13,7 @@ class Solution {
 
         int k = 1;
         while (!pq.isEmpty()) {
-            spending += (double) pq.poll() * k++;
+            spending += (long) pq.poll() * k++;
         }
 
         return spending;
