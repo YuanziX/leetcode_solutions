@@ -12,5 +12,7 @@ class Solution:
         for k, v in dt.items():
             if v > n:
                 res.append(k)
+            if len(res) == 2:
+                break
         
         return res
