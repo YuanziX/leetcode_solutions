@@ -1,18 +1,31 @@
 class Solution {
-    private boolean helper(String s, String p, int p1, int p2) {
-        int l1 = s.length(), l2 = p.length();
-        if (p2 == l2) return p1 == l1;
+    private Boolean[][] memo;
 
-        boolean firstMatch = (p1 < l1 && (s.charAt(p1) == p.charAt(p2) || p.charAt(p2) == '.'));
+    private boolean helper(String s, String p, int i, int j) {
+        int n = s.length(), m = p.length();
 
-        if (p2 + 1 < l2 && p.charAt(p2 + 1) == '*') {
-            return helper(s, p, p1, p2 + 2) || (firstMatch && helper(s, p, p1 + 1, p2));
+        if (memo[i][j] != null) return memo[i][j];
+
+        boolean ans;
+
+        if (j == m) {
+            ans = (i == n);
         } else {
-            return firstMatch && helper(s, p, p1 + 1, p2 + 1);
+            boolean firstMatch = (i < n && (s.charAt(i) == p.charAt(j) || p.charAt(j) == '.'));
+
+            if (j + 1 < m && p.charAt(j + 1) == '*') {
+                ans = helper(s, p, i, j + 2) || (firstMatch && helper(s, p, i + 1, j));
+            } else {
+                ans = firstMatch && helper(s, p, i + 1, j + 1);
+            }
         }
+
+        memo[i][j] = ans;
+        return ans;
     }
 
     public boolean isMatch(String s, String p) {
+        memo = new Boolean[s.length() + 1][p.length() + 1];
         return helper(s, p, 0, 0);
     }
 }
