@@ -1,27 +1,17 @@
 class Solution {
-    private static int helper(int[] arr, int n, int i, int[] memo) {
-        if (n == i) return 0;
-        if (memo[i] != -1) return memo[i];
-        int jumps = Integer.MAX_VALUE;
-
-        for (int j = 1; j <= arr[i]; j++) {
-            if (i + j > n) continue;
-            int next = helper(arr, n, i + j, memo);
-            if (next == Integer.MAX_VALUE) continue;
-            jumps = Math.min(jumps, 1 + next);
-        }
-
-        return memo[i] = jumps;
-    }
-
     public static int jump(int[] arr) {
         int N = arr.length;
-        int[] memo = new int[N];
-        for (int i = 0; i < N; i++) {
-            memo[i] = -1;
+        int[] dp = new int[N];
+        for (int i = 0; i < N - 1; i++) {
+            dp[i] = 100000;
         }
 
-        int n = helper(arr, N - 1, 0, memo);
-        return n == Integer.MAX_VALUE ? -1 : n;
+        for (int i = N - 2; i >= 0; i--) {
+            for (int jp = 1; jp <= arr[i] && i + jp < N; jp++) {
+                dp[i] = Math.min(dp[i], 1 + dp[i + jp]);
+            }
+        }
+
+        return dp[0];    
     }
 }
