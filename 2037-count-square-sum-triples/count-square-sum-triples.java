@@ -21,7 +21,6 @@ class Solution {
                 }
             }
         }
-        System.gc();
         return count;
     }
 }
