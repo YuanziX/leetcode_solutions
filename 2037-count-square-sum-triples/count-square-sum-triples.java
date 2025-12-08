@@ -1,19 +1,13 @@
 class Solution {
     public int countTriples(int n) {
-        Set<Integer> set = new HashSet<>();
-        for (int i = 1; i <= n; i++) {
-            set.add(i * i);
-        }
-
         int c = 0;
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= n; j++) {
-                if (set.contains(i * i + j * j)) {
-                    c++;
-                }
+        for (int a = 1; a <= n; a++) {
+            for (int b = 1; b <= n; b++) {
+                int c2 = a * a + b * b;
+                int cRoot = (int)Math.sqrt(c2);
+                if (cRoot <= n && cRoot * cRoot == c2) c++;
             }
         }
         return c;
     }
-
 }
